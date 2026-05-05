@@ -60,7 +60,7 @@ body {
     object-fit: cover;
 }
 
-/* OVERLAY ESCURO PARA DAR PROFUNDIDADE */
+/* OVERLAY ESCURO */
 .overlay {
     position: absolute;
     width: 100%;
@@ -109,7 +109,7 @@ body {
     cursor: pointer;
 }
 
-/* CORAÇÕES BONITOS */
+/* CORAÇÕES */
 .heart {
     position: absolute;
     color: rgba(255, 0, 80, 0.8);
@@ -137,6 +137,7 @@ body {
 
     <button class="music-btn" onclick="toggleMusic()">🎵</button>
 
+    <!-- SLIDES (apenas o primeiro com active) -->
     <div class="mySlides active">
         <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
     </div>
@@ -148,34 +149,6 @@ body {
     <div class="mySlides">
         <img src="https://lh3.googleusercontent.com/u/0/d/1h157paw7MwPRkG-_zPoxbT43t6u4Virj">
     </div>
-    
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
-
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
-
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
-
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
-
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
-
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
-
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
 
     <div class="overlay"></div>
 
@@ -185,12 +158,13 @@ body {
 
 </div>
 
-<audio id="musica" loop>
-    <source src="https://drive.google.com/uc?export=download&id=1Y0doElsBbS3psq63UuYpaHlNuX7PfruS" type="audio/mpeg">
+<!-- MÚSICA (AJUSTADA) -->
+<audio id="musica" loop preload="auto">
+    <source src="https://drive.google.com/uc?export=view&id=1Y0doElsBbS3psq63UuYpaHlNuX7PfruS" type="audio/mpeg">
 </audio>
 
 <script>
-/* SLIDES COM FADE */
+/* SLIDES */
 let slideIndex = 0;
 const slides = document.querySelectorAll(".mySlides");
 
@@ -203,7 +177,7 @@ function showSlides() {
 }
 showSlides();
 
-/* CORAÇÕES MAIS BONITOS */
+/* CORAÇÕES */
 function criarCoracao() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -224,16 +198,21 @@ const audio = document.getElementById("musica");
 
 function toggleMusic() {
     if (audio.paused) {
-        audio.play();
+        audio.play().catch(() => {});
     } else {
         audio.pause();
     }
 }
 
-/* LIBERAR SOM AO TOQUE */
-document.body.addEventListener("click", () => {
+/* FORÇA PLAY (mobile + navegador) */
+function iniciarMusica() {
     audio.play().catch(() => {});
-}, { once: true });
+    document.removeEventListener("click", iniciarMusica);
+    document.removeEventListener("touchstart", iniciarMusica);
+}
+
+document.addEventListener("click", iniciarMusica);
+document.addEventListener("touchstart", iniciarMusica);
 
 </script>
 
