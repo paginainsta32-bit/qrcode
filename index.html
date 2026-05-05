@@ -11,89 +11,86 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at top, #1a1a1a, #000);
+    background: black;
     overflow: hidden;
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* CELULAR */
+/* CONTAINER */
 .slideshow-container {
     position: relative;
     width: 90%;
     max-width: 360px;
-    aspect-ratio: 9 / 16;
-
+    aspect-ratio: 9/16;
     border-radius: 40px;
     border: 10px solid #111;
     overflow: hidden;
-
-    box-shadow: 0 0 60px rgba(255, 0, 80, 0.3);
-    background: black;
+    box-shadow: 0 0 100px rgba(255,0,80,0.2);
 }
 
-/* BARRA SUPERIOR FAKE */
-.top-bar {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 30px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-    z-index: 5;
-}
-
-/* SLIDES COM FADE */
+/* SLIDES */
 .mySlides {
     position: absolute;
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1.2s ease-in-out;
+    transition: opacity 1.5s ease;
 }
-
 .mySlides.active {
     opacity: 1;
 }
-
 .mySlides img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    animation: zoom 10s ease-in-out infinite alternate;
 }
 
-/* OVERLAY ESCURO */
+@keyframes zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+}
+
+/* OVERLAY */
 .overlay {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%);
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9));
     z-index: 2;
 }
 
-/* TEXTO */
-.texto-romantico {
+/* TEXTO TRAILER */
+.texto {
     position: absolute;
-    bottom: 30px;
+    bottom: 50px;
     width: 100%;
     text-align: center;
     color: white;
-    font-size: 20px;
-    padding: 15px;
+    font-size: 24px;
     z-index: 3;
-
     opacity: 0;
-    transform: translateY(20px);
-    animation: subir 2s ease forwards;
-    animation-delay: 1s;
+    transition: all 1s ease;
+    text-shadow: 0 0 20px rgba(255,255,255,0.7);
 }
 
-@keyframes subir {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* FINAL */
+.final {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    opacity: 0;
+    z-index: 10;
+    transition: opacity 2s ease;
 }
 
-/* BOTÃO MÚSICA */
+/* BOTÃO */
 .music-btn {
     position: absolute;
     top: 40px;
@@ -104,27 +101,34 @@ body {
     color: white;
     font-size: 18px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     cursor: pointer;
 }
 
 /* CORAÇÕES */
 .heart {
     position: absolute;
-    color: rgba(255, 0, 80, 0.8);
+    color: rgba(255,0,80,0.5);
     animation: cair linear infinite;
 }
-
 @keyframes cair {
-    0% {
-        transform: translateY(-10vh) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(110vh) scale(1.5);
-        opacity: 0;
-    }
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(110vh); }
+}
+
+/* PARTÍCULAS */
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    opacity: 0.5;
+    animation: float 6s linear infinite;
+}
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
 }
 </style>
 </head>
@@ -133,87 +137,105 @@ body {
 
 <div class="slideshow-container">
 
-    <div class="top-bar"></div>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
 
-    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+<div class="mySlides active"><img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9"></div>
+<div class="mySlides"><img src="https://lh3.googleusercontent.com/u/0/d/14XnBecqBw5M7zBYLi9oflWshnzPGWhyU"></div>
+<div class="mySlides"><img src="https://lh3.googleusercontent.com/u/0/d/1h157paw7MwPRkG-_zPoxbT43t6u4Virj"></div>
 
-    <!-- SLIDES (apenas o primeiro com active) -->
-    <div class="mySlides active">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
-    </div>
+<div class="overlay"></div>
 
-    <div class="mySlides">
-        <img src="https://lh3.googleusercontent.com/u/0/d/14XnBecqBw5M7zBYLi9oflWshnzPGWhyU">
-    </div>
+<div class="texto" id="texto"></div>
 
-    <div class="mySlides">
-        <img src="https://lh3.googleusercontent.com/u/0/d/1h157paw7MwPRkG-_zPoxbT43t6u4Virj">
-    </div>
-
-    <div class="overlay"></div>
-
-    <div class="texto-romantico">
-    Você é o melhor capítulo da minha vida ❤️
-    </div>
+<div class="final" id="final">
+    Eu te amo para sempre ❤️
+</div>
 
 </div>
 
-<!-- MÚSICA (AJUSTADA) -->
 <audio id="musica" loop preload="auto">
-    <source src="https://dl.dropboxusercontent.com/scl/fi/baus93geh0hle1pb50rok/02-Vou-Te-Amar-Cigana-Mentes-Tao-Bem.mp3?rlkey=lrrw2c9fad5ex7l2htqmpnojt&st=i2th53d9" type="audio/mpeg">
+<source src="https://dl.dropboxusercontent.com/scl/fi/baus93geh0hle1pb50rok/02-Vou-Te-Amar-Cigana-Mentes-Tao-Bem.mp3?rlkey=lrrw2c9fad5ex7l2htqmpnojt&st=i2th53d9">
 </audio>
 
 <script>
-/* SLIDES */
-let slideIndex = 0;
-const slides = document.querySelectorAll(".mySlides");
+const frases = [
+    "Em um mundo comum...",
+    "algo extraordinário aconteceu.",
+    "Eu encontrei você.",
+    "E tudo mudou."
+];
 
-function showSlides() {
-    slides.forEach(slide => slide.classList.remove("active"));
-    slideIndex++;
-    if (slideIndex > slides.length) slideIndex = 1;
-    slides[slideIndex - 1].classList.add("active");
-    setTimeout(showSlides, 4000);
+let i = 0;
+let slide = 0;
+const slides = document.querySelectorAll(".mySlides");
+const texto = document.getElementById("texto");
+const final = document.getElementById("final");
+
+/* RITMO DE TRAILER */
+function rodarTrailer() {
+    if (i < frases.length) {
+        slides.forEach(s => s.classList.remove("active"));
+        slide = (slide + 1) % slides.length;
+        slides[slide].classList.add("active");
+
+        texto.style.opacity = 0;
+        setTimeout(() => {
+            texto.textContent = frases[i];
+            texto.style.opacity = 1;
+        }, 400);
+
+        i++;
+        setTimeout(rodarTrailer, 2500); // ritmo inicial
+    } else {
+        /* FINAL CINEMATOGRÁFICO */
+        texto.style.opacity = 0;
+        setTimeout(() => {
+            final.style.opacity = 1;
+        }, 1500);
+    }
 }
-showSlides();
+
+setTimeout(rodarTrailer, 2000);
 
 /* CORAÇÕES */
-function criarCoracao() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤";
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*3+3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},400);
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 25 + 10) + "px";
-    heart.style.animationDuration = (Math.random() * 4 + 3) + "s";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 7000);
-}
-setInterval(criarCoracao, 250);
+/* PARTÍCULAS */
+setInterval(()=>{
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"vw";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),6000);
+},300);
 
 /* MÚSICA */
-const audio = document.getElementById("musica");
+const audio=document.getElementById("musica");
 
-function toggleMusic() {
-    if (audio.paused) {
-        audio.play().catch(() => {});
+function toggleMusic(){
+    if(audio.paused){
+        audio.volume=0;
+        audio.play();
+        let v=0;
+        let fade=setInterval(()=>{
+            v+=0.05;
+            audio.volume=v;
+            if(v>=1) clearInterval(fade);
+        },100);
     } else {
         audio.pause();
     }
 }
 
-/* FORÇA PLAY (mobile + navegador) */
-function iniciarMusica() {
-    audio.play().catch(() => {});
-    document.removeEventListener("click", iniciarMusica);
-    document.removeEventListener("touchstart", iniciarMusica);
-}
-
-document.addEventListener("click", iniciarMusica);
-document.addEventListener("touchstart", iniciarMusica);
-
+document.addEventListener("click",()=>audio.play(),{once:true});
 </script>
 
 </body>
