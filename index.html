@@ -5,130 +5,155 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: black;
-    overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:black;
+    overflow:hidden;
+    font-family:'Segoe UI',sans-serif;
 }
 
 /* CONTAINER */
-.slideshow-container {
-    position: relative;
-    width: 90%;
-    max-width: 360px;
-    aspect-ratio: 9/16;
-    border-radius: 40px;
-    border: 10px solid #111;
-    overflow: hidden;
-    box-shadow: 0 0 100px rgba(255,0,80,0.2);
+.slideshow-container{
+    position:relative;
+    width:90%;
+    max-width:360px;
+    aspect-ratio:9/16;
+    border-radius:40px;
+    border:10px solid #111;
+    overflow:hidden;
+    box-shadow:0 0 120px rgba(255,0,80,0.25);
 }
 
 /* SLIDES */
-.mySlides {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1.5s ease;
+.mySlides{
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    transition:opacity 1s ease;
 }
-.mySlides.active {
-    opacity: 1;
-}
-.mySlides img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    animation: zoom 10s ease-in-out infinite alternate;
+.mySlides.active{opacity:1;}
+
+.mySlides img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    animation:zoom 12s ease-in-out infinite alternate;
 }
 
-@keyframes zoom {
-    from { transform: scale(1); }
-    to { transform: scale(1.15); }
+@keyframes zoom{
+    from{transform:scale(1);}
+    to{transform:scale(1.2);}
 }
 
-/* OVERLAY */
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9));
-    z-index: 2;
+/* TEXTO */
+.texto{
+    position:absolute;
+    bottom:60px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:24px;
+    opacity:0;
+    z-index:5;
+    transition:all 0.8s ease;
+    text-shadow:0 0 20px rgba(255,255,255,0.8);
 }
 
-/* TEXTO TRAILER */
-.texto {
-    position: absolute;
-    bottom: 50px;
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-size: 24px;
-    z-index: 3;
-    opacity: 0;
-    transition: all 1s ease;
-    text-shadow: 0 0 20px rgba(255,255,255,0.7);
+/* NOME */
+.casal{
+    position:absolute;
+    top:50%;
+    width:100%;
+    text-align:center;
+    transform:translateY(-50%);
+    font-size:32px;
+    color:white;
+    letter-spacing:3px;
+    opacity:0;
+    z-index:6;
+    text-shadow:0 0 25px rgba(255,255,255,0.9);
+    transition:opacity 2s ease;
 }
 
 /* FINAL */
-.final {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    opacity: 0;
-    z-index: 10;
-    transition: opacity 2s ease;
+.final{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:black;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    opacity:0;
+    z-index:10;
+    transition:opacity 2s ease;
+}
+
+.sub{
+    font-size:16px;
+    opacity:0.7;
+    margin-top:10px;
 }
 
 /* BOTÃO */
-.music-btn {
-    position: absolute;
-    top: 40px;
-    right: 15px;
-    z-index: 6;
-    background: rgba(0,0,0,0.5);
-    border: none;
-    color: white;
-    font-size: 18px;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
+.music-btn{
+    position:absolute;
+    top:40px;
+    right:15px;
+    z-index:6;
+    background:rgba(0,0,0,0.5);
+    border:none;
+    color:white;
+    font-size:18px;
+    border-radius:50%;
+    width:45px;
+    height:45px;
+    cursor:pointer;
+}
+
+/* TEXTO INDICADOR */
+.music-hint{
+    position:absolute;
+    top:90px;
+    right:10px;
+    color:white;
+    font-size:12px;
+    opacity:0.8;
+    z-index:6;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{opacity:0.3;}
+    50%{opacity:1;}
+    100%{opacity:0.3;}
 }
 
 /* CORAÇÕES */
-.heart {
-    position: absolute;
-    color: rgba(255,0,80,0.5);
-    animation: cair linear infinite;
-}
-@keyframes cair {
-    from { transform: translateY(-10vh); }
-    to { transform: translateY(110vh); }
+.heart{
+    position:absolute;
+    color:rgba(255,0,80,0.6);
+    animation:cair linear infinite;
+    z-index:1;
 }
 
-/* PARTÍCULAS */
-.particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    opacity: 0.5;
-    animation: float 6s linear infinite;
-}
-@keyframes float {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-10vh); }
+@keyframes cair{
+    0%{
+        transform:translateY(-10vh) scale(1);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(110vh) scale(1.5);
+        opacity:0;
+    }
 }
 </style>
 </head>
@@ -138,7 +163,9 @@ body {
 <div class="slideshow-container">
 
 <button class="music-btn" onclick="toggleMusic()">🎵</button>
+<div class="music-hint">toque 🎵</div>
 
+<!-- SLIDES -->
 <div class="mySlides active"><img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9"></div>
 <div class="mySlides"><img src="https://lh3.googleusercontent.com/u/0/d/14XnBecqBw5M7zBYLi9oflWshnzPGWhyU"></div>
 <div class="mySlides"><img src="https://lh3.googleusercontent.com/u/0/d/1h157paw7MwPRkG-_zPoxbT43t6u4Virj"></div>
@@ -150,12 +177,12 @@ body {
 <div class="mySlides"><img src="https://lh3.googleusercontent.com/u/0/d/1mzmRlb_42YrgVOQ95dStDEdTEmQx8BzW"></div>
 <div class="mySlides"><img src="https://lh3.googleusercontent.com/u/0/d/1-4L8aMN0A71RuYYqJZKRa9iz8LVS3gKK"></div>
 
-    <div class="overlay"></div>
-
+<div class="casal" id="casal">PHELIPE & VANESSA</div>
 <div class="texto" id="texto"></div>
 
 <div class="final" id="final">
-    Eu te amo para sempre ❤️
+    NOSSA HISTÓRIA
+    <div class="sub">Para sempre começa agora ❤️</div>
 </div>
 
 </div>
@@ -165,64 +192,64 @@ body {
 </audio>
 
 <script>
-const frases = [
-    "Em um mundo comum...",
-    "algo extraordinário aconteceu.",
-    "Eu encontrei você.",
-    "E tudo mudou."
+const frases=[
+"Em um mundo comum...",
+"nada parecia diferente.",
+"até você aparecer...",
+"e tudo ganhar sentido.",
+"não foi sorte...",
+"não foi acaso...",
+"foi destino.",
+"foi você.",
+"foi nós.",
+"Phelipe & Vanessa ❤️"
 ];
 
-let i = 0;
-let slide = 0;
-const slides = document.querySelectorAll(".mySlides");
-const texto = document.getElementById("texto");
-const final = document.getElementById("final");
+let i=0,slide=0;
+const slides=document.querySelectorAll(".mySlides");
+const texto=document.getElementById("texto");
+const final=document.getElementById("final");
+const casal=document.getElementById("casal");
 
-/* RITMO DE TRAILER */
-function rodarTrailer() {
-    if (i < frases.length) {
-        slides.forEach(s => s.classList.remove("active"));
-        slide = (slide + 1) % slides.length;
+/* INTRO */
+setTimeout(()=>casal.style.opacity=1,1500);
+setTimeout(()=>casal.style.opacity=0,4000);
+
+/* TRAILER */
+function rodar(){
+    if(i<frases.length){
+        slides.forEach(s=>s.classList.remove("active"));
+        slide=(slide+1)%slides.length;
         slides[slide].classList.add("active");
 
-        texto.style.opacity = 0;
-        setTimeout(() => {
-            texto.textContent = frases[i];
-            texto.style.opacity = 1;
-        }, 400);
+        texto.style.opacity=0;
+        setTimeout(()=>{
+            texto.textContent=frases[i];
+            texto.style.opacity=1;
+        },300);
 
         i++;
-        setTimeout(rodarTrailer, 2500); // ritmo inicial
+        let tempo=i<5?2500:1800;
+        setTimeout(rodar,tempo);
     } else {
-        /* FINAL CINEMATOGRÁFICO */
-        texto.style.opacity = 0;
-        setTimeout(() => {
-            final.style.opacity = 1;
-        }, 1500);
+        texto.style.opacity=0;
+        setTimeout(()=>final.style.opacity=1,1500);
     }
 }
-
-setTimeout(rodarTrailer, 2000);
+setTimeout(rodar,4500);
 
 /* CORAÇÕES */
-setInterval(()=>{
-    let h=document.createElement("div");
+function criarCoracao(){
+    const h=document.createElement("div");
     h.className="heart";
     h.innerHTML="❤";
     h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(Math.random()*20+10)+"px";
     h.style.animationDuration=(Math.random()*3+3)+"s";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),6000);
-},400);
-
-/* PARTÍCULAS */
-setInterval(()=>{
-    let p=document.createElement("div");
-    p.className="particle";
-    p.style.left=Math.random()*100+"vw";
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(),6000);
-},300);
+}
+setInterval(criarCoracao,300);
 
 /* MÚSICA */
 const audio=document.getElementById("musica");
@@ -237,9 +264,7 @@ function toggleMusic(){
             audio.volume=v;
             if(v>=1) clearInterval(fade);
         },100);
-    } else {
-        audio.pause();
-    }
+    } else audio.pause();
 }
 
 document.addEventListener("click",()=>audio.play(),{once:true});
