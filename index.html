@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* CELULAR */
+.slideshow-container {
+    position: relative;
+    width: 90%;
+    max-width: 360px;
+    aspect-ratio: 9 / 16;
+
+    border-radius: 40px;
+    border: 10px solid #111;
+    overflow: hidden;
+
+    box-shadow: 0 0 60px rgba(255, 0, 80, 0.3);
+    background: black;
+}
+
+/* BARRA SUPERIOR FAKE */
+.top-bar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+    z-index: 5;
+}
+
+/* SLIDES COM FADE */
+.mySlides {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.mySlides.active {
+    opacity: 1;
+}
+
+.mySlides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* OVERLAY ESCURO PARA DAR PROFUNDIDADE */
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%);
+    z-index: 2;
+}
+
+/* TEXTO */
+.texto-romantico {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    padding: 15px;
+    z-index: 3;
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: subir 2s ease forwards;
+    animation-delay: 1s;
+}
+
+@keyframes subir {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* BOTÃO MÚSICA */
+.music-btn {
+    position: absolute;
+    top: 40px;
+    right: 15px;
+    z-index: 6;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+/* CORAÇÕES BONITOS */
+.heart {
+    position: absolute;
+    color: rgba(255, 0, 80, 0.8);
+    animation: cair linear infinite;
+}
+
+@keyframes cair {
+    0% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) scale(1.5);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="slideshow-container">
+
+    <div class="top-bar"></div>
+
+    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides">
+        <img src="https://lh3.googleusercontent.com/u/0/d/14XnBecqBw5M7zBYLi9oflWshnzPGWhyU">
+    </div>
+
+    <div class="mySlides">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1h157paw7MwPRkG-_zPoxbT43t6u4Virj">
+    </div>
+    
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="mySlides active">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1Aiv7jlcJofdfB5UAH_OgH3EK6OMT0Tb9">
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="texto-romantico">
+        Você é o melhor capítulo da minha vida ❤️
+    </div>
+
+</div>
+
+<audio id="musica" loop>
+    <source src="https://drive.google.com/uc?export=download&id=1Y0doElsBbS3psq63UuYpaHlNuX7PfruS" type="audio/mpeg">
+</audio>
+
+<script>
+/* SLIDES COM FADE */
+let slideIndex = 0;
+const slides = document.querySelectorAll(".mySlides");
+
+function showSlides() {
+    slides.forEach(slide => slide.classList.remove("active"));
+    slideIndex++;
+    if (slideIndex > slides.length) slideIndex = 1;
+    slides[slideIndex - 1].classList.add("active");
+    setTimeout(showSlides, 4000);
+}
+showSlides();
+
+/* CORAÇÕES MAIS BONITOS */
+function criarCoracao() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 25 + 10) + "px";
+    heart.style.animationDuration = (Math.random() * 4 + 3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+}
+setInterval(criarCoracao, 250);
+
+/* MÚSICA */
+const audio = document.getElementById("musica");
+
+function toggleMusic() {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+
+/* LIBERAR SOM AO TOQUE */
+document.body.addEventListener("click", () => {
+    audio.play().catch(() => {});
+}, { once: true });
+
+</script>
+
+</body>
+</html>
